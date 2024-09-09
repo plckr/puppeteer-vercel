@@ -2,11 +2,15 @@ import { dev } from '@/lib/constants'
 import Chromium from '@sparticuz/chromium'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer'
+import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer-core'
 
 async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
   if (dev) {
-    return { args: puppeteer.defaultArgs(), ...options }
+    return {
+      args: puppeteer.defaultArgs(),
+      executablePath: await Chromium.executablePath(),
+      ...options,
+    }
   }
 
   if (Object.hasOwn(options, 'headless')) {
