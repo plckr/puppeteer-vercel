@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer-core'
 
-export const localExecutablePath =
+const localExecutablePath =
   process.platform === 'win32'
     ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     : process.platform === 'linux'
