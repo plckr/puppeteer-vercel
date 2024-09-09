@@ -5,10 +5,12 @@ import { notFound } from 'next/navigation'
 import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer-core'
 
 async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
+  const executablePath = await Chromium.executablePath()
+
   if (dev) {
     return {
       args: puppeteer.defaultArgs(),
-      executablePath: await Chromium.executablePath(),
+      executablePath,
       ...options,
     }
   }
@@ -20,7 +22,7 @@ async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
   return {
     args: Chromium.args,
     defaultViewport: Chromium.defaultViewport,
-    executablePath: await Chromium.executablePath(),
+    executablePath,
     headless: Chromium.headless,
   }
 }
