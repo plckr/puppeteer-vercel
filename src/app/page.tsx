@@ -1,16 +1,13 @@
 import { dev } from '@/lib/constants'
-import Chromium from '@sparticuz/chromium'
+import Chromium from '@sparticuz/chromium-min'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer-core'
 
 async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
-  const executablePath = await Chromium.executablePath()
-
   if (dev) {
     return {
       args: puppeteer.defaultArgs(),
-      executablePath,
       ...options,
     }
   }
@@ -22,7 +19,9 @@ async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
   return {
     args: Chromium.args,
     defaultViewport: Chromium.defaultViewport,
-    executablePath,
+    executablePath: await Chromium.executablePath(
+      'https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar'
+    ),
     headless: Chromium.headless,
   }
 }
