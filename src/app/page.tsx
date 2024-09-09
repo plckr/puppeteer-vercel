@@ -4,10 +4,18 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import puppeteer, { PuppeteerLaunchOptions } from 'puppeteer-core'
 
+export const localExecutablePath =
+  process.platform === 'win32'
+    ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    : process.platform === 'linux'
+    ? '/usr/bin/google-chrome'
+    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
 async function getPuppeteerOptions(options: PuppeteerLaunchOptions = {}) {
   if (dev) {
     return {
       args: puppeteer.defaultArgs(),
+      executablePath: localExecutablePath,
       ...options,
     }
   }
